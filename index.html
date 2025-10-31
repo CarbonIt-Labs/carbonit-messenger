@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonIt</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for Inter font and custom glow effect --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'carbon-dark': '#111827',
+                        'carbon-gray': '#1F2937',
+                        'carbon-accent': '#C5F6FA', // Light cyan/white glow color from logo
+                    },
+                    boxShadow: {
+                        'glow': '0 0 10px rgba(197, 246, 250, 0.5), 0 0 20px rgba(197, 246, 250, 0.3)',
+                    }
+                },
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        /* Simplified Glow Effects: Only using the generic template glow now */
+        .glow-template {
+            filter: drop-shadow(0 0 8px rgba(156, 163, 175, 0.7)); /* Gray Glow for placeholders */
+        }
+        /* Enable smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-carbon-dark text-gray-100 font-sans antialiased">
+
+    <!-- Primary Navigation Bar (Sticky) -->
+    <nav class="sticky top-0 z-10 bg-carbon-dark/95 backdrop-blur-sm border-b border-gray-700/50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo/Home Link -->
+            <a href="#" class="text-xl font-bold text-white tracking-widest hover:text-carbon-accent transition duration-200">
+                CarbonIt
+            </a>
+            <!-- Navigation Links -->
+            <div class="space-x-6">
+                <!-- 'About' link scrolls to the Why CarbonIt section -->
+                <a href="#why-carbonit" class="text-gray-400 hover:text-carbon-accent transition duration-200">About</a>
+                <!-- 'GitHub' link placeholder -->
+                <a href="#" class="text-gray-400 hover:text-carbon-accent transition duration-200">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section: Centered Logo and Tagline --><section class="flex items-center justify-center min-h-screen border-b border-gray-700/50 pb-20">
+        <!-- Centered Content --><div class="text-center p-8 max-w-2xl space-y-8">
+            <!-- CarbonIt Full Logo --><img 
+                src="uploaded:1000065910.jpg-8c0dde25-67c7-49df-a88e-ba37772658c1" 
+                alt="CarbonIt Full Logo" 
+                class="h-24 sm:h-32 mx-auto"
+                onerror="this.onerror=null; this.src='https://placehold.co/120x60/111827/C5F6FA?text=CarbonIt';"
+            >
+            
+            <!-- Tagline --><h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-white mt-8">
+                <!-- Glowing Box for "Messaging" --><div class="inline-block bg-carbon-accent/10 px-4 py-2 rounded-xl shadow-glow">
+                    <span class="text-carbon-accent">Messaging</span>
+                </div>
+                Redefined.
+            </h1>
+
+            <!-- Optional: A small, subtle description if desired --><p class="text-lg sm:text-xl text-gray-400 max-w-xl mx-auto">
+                Experience the future of communication with unparalleled security and elegance.
+            </p>
+
+            <!-- Dynamic Install Section: Content is now purely generic --><div id="install-section" class="flex flex-col items-center justify-center mt-8 space-y-4">
+                <!-- Content will be populated here by JavaScript --></div>
+        </div>
+    </section>
+    
+    <!-- Platform Previews Section (UPDATED) --><section id="platform-previews" class="py-12 px-8 bg-carbon-dark/95 border-t border-b border-gray-700/50">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-white">- Current Platform Logos -</h2>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-stretch gap-8">
+                
+                <!-- Placeholder Card 1 (Formerly Windows) --><div class="flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-500/50 w-full sm:w-1/3">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-400">Desktop OS 1</h3>
+                    <div class="glow-template">
+                        <!-- Placeholder SVG: Simple Square --><svg class="w-16 h-16 text-gray-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="15" width="70" height="70" rx="15" ry="15"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Placeholder Card 2 (Formerly macOS) --><div class="flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-500/50 w-full sm:w-1/3">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-400">Desktop OS 2</h3>
+                    <div class="glow-template">
+                        <!-- Placeholder SVG: Simple Square --><svg class="w-16 h-16 text-gray-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="15" width="70" height="70" rx="15" ry="15"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Placeholder Card 3 (Formerly Linux) --><div class="flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-500/50 w-full sm:w-1/3">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-400">Desktop OS 3</h3>
+                    <div class="glow-template">
+                        <!-- Placeholder SVG: Simple Square --><svg class="w-16 h-16 text-gray-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="15" width="70" height="70" rx="15" ry="15"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Meet the Team Section (Using Template B Layout) --><section id="team" class="py-20 px-8 bg-carbon-dark/80 border-t border-b border-gray-700/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-carbon-accent text-left">Meet the Team</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-16">
+                
+                <!-- Card 1 Placeholder --><div class="text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300 hover:shadow-glow/20">
+                    <img class="h-24 w-24 rounded-full object-cover mx-auto mb-4 border-2 border-carbon-accent/50" 
+                         src="https://placehold.co/100x100/1F2937/C5F6FA?text=PHOTO" 
+                         alt="[Image Placeholder]">
+                    <h4 class="text-xl font-semibold text-white">[Name]</h4>
+                    <p class="text-carbon-accent text-sm">[Title]</p>
+                    <p class="text-gray-400 text-xs mt-2">[Short Bio]</p>
+                </div>
+
+                <!-- Card 2 Placeholder --><div class="text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300 hover:shadow-glow/20">
+                    <img class="h-24 w-24 rounded-full object-cover mx-auto mb-4 border-2 border-carbon-accent/50" 
+                         src="https://placehold.co/100x100/1F2937/C5F6FA?text=PHOTO" 
+                         alt="[Image Placeholder]">
+                    <h4 class="text-xl font-semibold text-white">[Name]</h4>
+                    <p class="text-carbon-accent text-sm">[Title]</p>
+                    <p class="text-gray-400 text-xs mt-2">[Short Bio]</p>
+                </div>
+
+                <!-- Card 3 Placeholder --><div class="text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300 hover:shadow-glow/20">
+                    <img class="h-24 w-24 rounded-full object-cover mx-auto mb-4 border-2 border-carbon-accent/50" 
+                         src="https://placehold.co/100x100/1F2937/C5F6FA?text=PHOTO" 
+                         alt="[Image Placeholder]">
+                    <h4 class="text-xl font-semibold text-white">[Name]</h4>
+                    <p class="text-carbon-accent text-sm">[Title]</p>
+                    <p class="text-gray-400 text-xs mt-2">[Short Bio]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why CarbonIt Section --><section id="why-carbonit" class="py-20 px-8 bg-carbon-dark/90 border-t border-b border-gray-700/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-carbon-accent text-left">- Why CarbonIt ?</h2>
+            
+            <!-- Blank Template with 150-word capacity --><div class="bg-carbon-gray p-8 rounded-xl border border-gray-700/50">
+                <h3 class="text-2xl font-semibold mb-4 text-white">Our Vision and Mission (Max 150 Words)</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    At CarbonIt we treat privacy as a design decision, not an afterthought. Our platform combines cutting-edge cryptography with minimal, distraction-free design so users keep ownership of their conversations, even as compute power evolves. Built with future-resistant key exchange and a commitment to privacy-by-default, CarbonIt removes the tradeoffs between security and usability. We believe messages should be private by default, transparent by design, and effortless to use. Whether you’re a developer auditing protocols or someone who simply values quiet, secure chat. Join us in rebuilding communication from the ground up: elegant, verifiable, and uncompromisingly private.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How CarbonIt was Made Section (New) --><section id="how-carbonit-was-made" class="py-20 px-8 bg-carbon-dark/80 border-t border-b border-gray-700/50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-carbon-accent text-left">- How CarbonIt was Made :</h2>
+            
+            <!-- Blank Template with 200-word capacity --><div class="bg-carbon-gray p-8 rounded-xl border border-gray-700/50">
+                <h3 class="text-2xl font-semibold mb-4 text-white">The CarbonIt Genesis Story (Max 200 Words)</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    The journey of CarbonIt began with a simple, profound challenge: to build a messaging platform resistant to the computational power of future quantum computers while still feeling effortless. Our small team of cryptographers and engineers iterated across prototypes, moving from theoretical key-exchange models to hands-on node tests on localhost and private networks. We prioritized a modular architecture: a hardened node engine for secure peer-to-peer transport, a compact symmetric layer for message throughput, and a minimal client that surfaces only what users need. Every release included automated tests for handshake correctness, offline signing checksums, and human-led audits of any cryptographic glue code. The product you see now is the interface — a privacy-first front door to a protocol stack that remains private until it’s production-ready. We focused on verifiability, reproducibility, and developer-friendly tooling so that, when CarbonIt opens, other engineers can inspect, run, and contribute safely.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript for OS Detection and Dynamic Button Generation (UPDATED) --><script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const installSection = document.getElementById('install-section');
+            if (!installSection) return;
+
+            // --- Simplified Logic: Use generic placeholder regardless of OS ---
+            const os = 'Your Device';
+            const downloadUrl = '#'; // Generic placeholder URL
+            const glowClass = 'glow-template'; // Neutral gray glow
+
+            // Generic Placeholder SVG (Simple Square)
+            const placeholderSvg = `
+                <svg class="w-12 h-12 text-gray-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="15" y="15" width="70" height="70" rx="15" ry="15"/>
+                </svg>
+            `;
+
+            // Render the dynamic Install button using generic placeholders
+            installSection.innerHTML = `
+                <div class="inline-flex items-center space-x-4">
+                    <div class="${glowClass}">
+                        ${placeholderSvg}
+                    </div>
+                </div>
+                <a href="${downloadUrl}" class="inline-block px-8 py-3 bg-carbon-accent text-carbon-dark font-bold text-lg rounded-full shadow-lg hover:shadow-glow transition duration-300 transform hover:scale-[1.03]">
+                    Install for ${os}
+                </a>
+                <p class="text-sm text-gray-500 mt-2">
+                    Not ready to install? Check our other platforms below.
+                </p>
+            `;
+        });
+    </script>
+
+</body>
+</html>
