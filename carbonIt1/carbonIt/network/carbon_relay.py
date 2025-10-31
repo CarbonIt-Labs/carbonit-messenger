@@ -174,7 +174,7 @@ class CarbonRelay:
         # Pop next hop
         next_hop = route.pop(0)
         ip, port = parse_hostport(next_hop)
-        if ip is None:
+        if ip is None or port is None:
             log_event(f"INVALID_HOP {next_hop}")
             return
 
