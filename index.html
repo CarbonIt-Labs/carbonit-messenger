@@ -11,11 +11,16 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        // Added Orbitron font family
+                        orbitron: ['Orbitron', 'sans-serif'],
                     },
                     colors: {
                         'carbon-dark': '#111827',
                         'carbon-gray': '#1F2937',
                         'carbon-accent': '#C5F6FA', // Light cyan/white glow color from logo
+                        'windows-blue': '#3B82F6',
+                        'mac-silver': '#E5E7EB',
+                        'linux-orange': '#F97316',
                     },
                     boxShadow: {
                         'glow': '0 0 10px rgba(197, 246, 250, 0.5), 0 0 20px rgba(197, 246, 250, 0.3)',
@@ -25,47 +30,72 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
-        /* Simplified Glow Effects: Only using the generic template glow now */
-        .glow-template {
-            filter: drop-shadow(0 0 8px rgba(156, 163, 175, 0.7)); /* Gray Glow for placeholders */
-        }
+        /* Imported Orbitron font for the platform names */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Orbitron:wght@400..900&display=swap');
+        
         /* Enable smooth scrolling for anchor links */
         html {
             scroll-behavior: smooth;
+        }
+
+        /* Base class for all cards to ensure smooth transition */
+        .platform-card, .team-card {
+            transition: all 0.3s ease;
+        }
+
+        /* Windows Hover Glow (Blue) */
+        .hover-glow-windows:hover {
+            transform: translateY(-4px); /* Slight lift effect */
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.9);
+            border-color: #3B82F6;
+        }
+
+        /* macOS Hover Glow (Silver/White) */
+        .hover-glow-mac:hover {
+            transform: translateY(-4px); /* Slight lift effect */
+            box-shadow: 0 0 15px rgba(229, 231, 235, 0.9);
+            border-color: #E5E7EB;
+        }
+
+        /* Linux Hover Glow (Orange) */
+        .hover-glow-linux:hover {
+            transform: translateY(-4px); /* Slight lift effect */
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.9);
+            border-color: #F97316;
+        }
+        
+        /* NEW: Team Card Hover Glow (Accent Cyan) */
+        .hover-glow-team:hover {
+            transform: translateY(-6px); /* Stronger lift effect */
+            box-shadow: 0 0 25px rgba(197, 246, 250, 0.8); /* Strong glow based on carbon-accent */
+            border-color: #C5F6FA;
         }
     </style>
 </head>
 <body class="bg-carbon-dark text-gray-100 font-sans antialiased">
 
-    <!-- Primary Navigation Bar (Sticky) -->
-    <nav class="sticky top-0 z-10 bg-carbon-dark/95 backdrop-blur-sm border-b border-gray-700/50">
+    <!-- Primary Navigation Bar (Sticky) --><nav class="sticky top-0 z-10 bg-carbon-dark/95 backdrop-blur-sm border-b border-gray-700/50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <!-- Logo/Home Link -->
-            <a href="#" class="text-xl font-bold text-white tracking-widest hover:text-carbon-accent transition duration-200">
+            <!-- Logo/Home Link --><a href="#" class="text-xl font-bold text-white tracking-widest hover:text-carbon-accent transition duration-200">
                 CarbonIt
             </a>
-            <!-- Navigation Links -->
-            <div class="space-x-6">
-                <!-- 'About' link scrolls to the Why CarbonIt section -->
-                <a href="#why-carbonit" class="text-gray-400 hover:text-carbon-accent transition duration-200">About</a>
-                <!-- 'GitHub' link placeholder -->
-                <a href="https://github.com/CarbonIt-Labs/carbonit-messenger" class="text-gray-400 hover:text-carbon-accent transition duration-200">GitHub</a>
+            <!-- Navigation Links --><div class="space-x-6">
+                <!-- 'About' link scrolls to the Why CarbonIt section --><a href="#why-carbonit" class="text-gray-400 hover:text-carbon-accent transition duration-200">About</a>
+                <!-- 'GitHub' link placeholder --><a href="#" class="text-gray-400 hover:text-carbon-accent transition duration-200">GitHub</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section: Centered Logo and Tagline --><section class="flex items-center justify-center min-h-screen border-b border-gray-700/50 pb-20">
-        <!-- Centered Content --><div class="text-center p-8 max-w-2xl space-y-8">
+        <!-- Centered Content (Moved up with -mt-16) --><div class="text-center p-8 max-w-2xl space-y-8 -mt-16">
             <!-- CarbonIt Full Logo --><img 
                 src="uploaded:1000065910.jpg-8c0dde25-67c7-49df-a88e-ba37772658c1" 
                 alt="CarbonIt Full Logo" 
-                class="h-24 sm:h-32 mx-auto"
+                class="h-32 sm:h-40 mx-auto"
                 onerror="this.onerror=null; this.src='https://placehold.co/120x60/111827/C5F6FA?text=CarbonIt';"
             >
             
-            <!-- Tagline --><h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-white mt-8">
+            <!-- Tagline (Increased text size to 5xl/7xl) --><h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-tight text-white mt-8">
                 <!-- Glowing Box for "Messaging" --><div class="inline-block bg-carbon-accent/10 px-4 py-2 rounded-xl shadow-glow">
                     <span class="text-carbon-accent">Messaging</span>
                 </div>
@@ -76,43 +106,36 @@
                 Experience the future of communication with unparalleled security and elegance.
             </p>
 
-            <!-- Dynamic Install Section: Content is now purely generic --><div id="install-section" class="flex flex-col items-center justify-center mt-8 space-y-4">
-                <!-- Content will be populated here by JavaScript --></div>
+            <!-- Dynamic Install Section: Content is now populated by JavaScript -->
+            <div id="install-section" class="flex flex-col items-center justify-center mt-8 space-y-4">
+                <!-- Content will be populated here by JavaScript -->
+            </div>
         </div>
     </section>
     
     <!-- Platform Previews Section (UPDATED) --><section id="platform-previews" class="py-12 px-8 bg-carbon-dark/95 border-t border-b border-gray-700/50">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-white">- Current Platform Logos -</h2>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-white">- Available Platforms -</h2>
             
             <div class="flex flex-col sm:flex-row justify-center items-stretch gap-8">
                 
-                <!-- Placeholder Card 1 (Formerly Windows) --><div class="flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-500/50 w-full sm:w-1/3">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-400">Desktop OS 1</h3>
-                    <div class="glow-template">
-                        <!-- Placeholder SVG: Simple Square --><svg class="w-16 h-16 text-gray-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="15" y="15" width="70" height="70" rx="15" ry="15"/>
-                        </svg>
-                    </div>
-                </div>
+                <!-- Windows Card - Changed to an <a> tag to make it a clickable download link -->
+                <a href="#" role="button" target="_blank" class="platform-card flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-700/50 w-full sm:w-1/3 hover-glow-windows">
+                    <!-- Added font-orbitron -->
+                    <h3 class="text-2xl font-bold text-windows-blue font-orbitron">Windows</h3>
+                </a>
 
-                <!-- Placeholder Card 2 (Formerly macOS) --><div class="flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-500/50 w-full sm:w-1/3">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-400">Desktop OS 2</h3>
-                    <div class="glow-template">
-                        <!-- Placeholder SVG: Simple Square --><svg class="w-16 h-16 text-gray-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="15" y="15" width="70" height="70" rx="15" ry="15"/>
-                        </svg>
-                    </div>
-                </div>
+                <!-- macOS Card - Changed to an <a> tag to make it a clickable download link -->
+                <a href="#" role="button" target="_blank" class="platform-card flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-700/50 w-full sm:w-1/3 hover-glow-mac">
+                    <!-- Added font-orbitron -->
+                    <h3 class="text-2xl font-bold text-mac-silver font-orbitron">MacOS</h3>
+                </a>
 
-                <!-- Placeholder Card 3 (Formerly Linux) --><div class="flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-500/50 w-full sm:w-1/3">
-                    <h3 class="text-xl font-semibold mb-4 text-gray-400">Desktop OS 3</h3>
-                    <div class="glow-template">
-                        <!-- Placeholder SVG: Simple Square --><svg class="w-16 h-16 text-gray-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="15" y="15" width="70" height="70" rx="15" ry="15"/>
-                        </svg>
-                    </div>
-                </div>
+                <!-- Linux Card - Changed to an <a> tag to make it a clickable download link -->
+                <a href="#" role="button" target="_blank" class="platform-card flex flex-col items-center justify-center p-6 bg-carbon-gray rounded-xl border border-gray-700/50 w-full sm:w-1/3 hover-glow-linux">
+                    <!-- Added font-orbitron -->
+                    <h3 class="text-2xl font-bold text-linux-orange font-orbitron">Linux</h3>
+                </a>
             </div>
             
         </div>
@@ -124,7 +147,8 @@
             
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-16">
                 
-                <!-- Card 1 Placeholder --><div class="text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300 hover:shadow-glow/20">
+                <!-- Card 1 Placeholder - Added hover-glow-team class -->
+                <div class="team-card hover-glow-team text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300">
                     <img class="h-24 w-24 rounded-full object-cover mx-auto mb-4 border-2 border-carbon-accent/50" 
                          src="https://placehold.co/100x100/1F2937/C5F6FA?text=PHOTO" 
                          alt="[Image Placeholder]">
@@ -133,7 +157,8 @@
                     <p class="text-gray-400 text-xs mt-2">[Short Bio]</p>
                 </div>
 
-                <!-- Card 2 Placeholder --><div class="text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300 hover:shadow-glow/20">
+                <!-- Card 2 Placeholder - Added hover-glow-team class -->
+                <div class="team-card hover-glow-team text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300">
                     <img class="h-24 w-24 rounded-full object-cover mx-auto mb-4 border-2 border-carbon-accent/50" 
                          src="https://placehold.co/100x100/1F2937/C5F6FA?text=PHOTO" 
                          alt="[Image Placeholder]">
@@ -142,7 +167,8 @@
                     <p class="text-gray-400 text-xs mt-2">[Short Bio]</p>
                 </div>
 
-                <!-- Card 3 Placeholder --><div class="text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300 hover:shadow-glow/20">
+                <!-- Card 3 Placeholder - Added hover-glow-team class -->
+                <div class="team-card hover-glow-team text-center bg-carbon-gray p-6 rounded-xl shadow-lg border border-gray-700/50 transition duration-300">
                     <img class="h-24 w-24 rounded-full object-cover mx-auto mb-4 border-2 border-carbon-accent/50" 
                          src="https://placehold.co/100x100/1F2937/C5F6FA?text=PHOTO" 
                          alt="[Image Placeholder]">
@@ -180,32 +206,45 @@
         </div>
     </section>
 
-    <!-- JavaScript for OS Detection and Dynamic Button Generation (UPDATED) --><script>
+    <!-- JavaScript for OS Detection and Dynamic Button Generation (UPDATED) -->
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const installSection = document.getElementById('install-section');
             if (!installSection) return;
 
-            // --- Simplified Logic: Use generic placeholder regardless of OS ---
-            const os = 'Your Device';
-            const downloadUrl = '#'; // Generic placeholder URL
-            const glowClass = 'glow-template'; // Neutral gray glow
+            // Define OS-specific data, removing logoHtml and simplifying glowClass for the main button
+            const osData = {
+                windows: {
+                    name: 'Windows',
+                    url: '#', // Placeholder URL for Windows
+                },
+                mac: {
+                    // Changed 'macOS' to 'MacOS'
+                    name: 'MacOS',
+                    url: '#', // Placeholder URL for macOS
+                },
+                linux: {
+                    name: 'Linux',
+                    url: '#', // Placeholder URL for Linux
+                },
+                default: { // Fallback if OS not detected or for "Your Device"
+                    name: 'Your Device',
+                    url: '#',
+                }
+            };
 
-            // Generic Placeholder SVG (Simple Square)
-            const placeholderSvg = `
-                <svg class="w-12 h-12 text-gray-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="15" y="15" width="70" height="70" rx="15" ry="15"/>
-                </svg>
-            `;
+            let detectedOs = 'default';
+            // Simple OS detection logic
+            if (navigator.userAgent.indexOf("Win") != -1) detectedOs = 'windows';
+            if (navigator.userAgent.indexOf("Mac") != -1) detectedOs = 'mac';
+            if (navigator.userAgent.indexOf("Linux") != -1) detectedOs = 'linux';
 
-            // Render the dynamic Install button using generic placeholders
+            const currentOs = osData[detectedOs];
+
+            // Render the dynamic Install button *without* any logo placeholder
             installSection.innerHTML = `
-                <div class="inline-flex items-center space-x-4">
-                    <div class="${glowClass}">
-                        ${placeholderSvg}
-                    </div>
-                </div>
-                <a href="${downloadUrl}" class="inline-block px-8 py-3 bg-carbon-accent text-carbon-dark font-bold text-lg rounded-full shadow-lg hover:shadow-glow transition duration-300 transform hover:scale-[1.03]">
-                    Install for ${os}
+                <a href="${currentOs.url}" class="inline-block px-8 py-3 bg-carbon-accent text-carbon-dark font-bold text-lg rounded-full shadow-lg hover:shadow-glow transition duration-300 transform hover:scale-[1.03]">
+                    Install for ${currentOs.name}
                 </a>
                 <p class="text-sm text-gray-500 mt-2">
                     Not ready to install? Check our other platforms below.
