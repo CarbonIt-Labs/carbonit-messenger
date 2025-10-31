@@ -1,0 +1,16 @@
+C:\Users\USER\Desktop\carbonIt\
+├── network\
+│   ├── carbonit_node.py
+│   ├── carbon_relay.py          ← formerly relay_node.py
+│   ├── carbon_shield.py         ← formerly client_onion.py
+│   ├── shield_utils.py          ← formerly onion_utils.py
+│   └── relay_list.json
+├── encryptdecrypt\
+│   ├── encrypt_message.py
+│   ├── decrypt_message.py
+│   └── shield_crypto.py         ← formerly onion_crypto.py
+├── Keys\
+│   ├── public_key_private_key\
+│   └── chat_key\
+├── run_node.bat
+└── LEGAL_COMPLIANCE.md
