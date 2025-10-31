@@ -9,7 +9,7 @@ It’s designed to demonstrate secure communication principles — including key
 
 CarbonIt Messenger is an open experiment to build an internet where communication is private, decentralized, and user-controlled.
 
-- Key Features
+# - Key Features
 
 • True Peer-to-Peer (P2P):
 Communicates directly between two users — no central server required.
@@ -29,7 +29,7 @@ Each message includes timestamps and delivery confirmations for transparency.
 • Secure Key Derivation:
 Each chat session key is derived from a unique private–public key exchange (like Signal-style Diffie–Hellman).
 
-• Project Architecture
+# - Project Architecture
 ```
 carbonIt/
 ├── network/
@@ -48,11 +48,12 @@ carbonIt/
 ```
 
 ⚙️ How to Run
-1. Clone the Repository
+1. Clone the Repository:
+
 ```git clone https://github.com/CarbonIt-Labs/carbonit-messenger.git```
 ```cd carbonit-messenger/network```
 
-2. Run the Node
+3. Run the Node
 
 Run the run_node.bat file (Windows) or use:
 
