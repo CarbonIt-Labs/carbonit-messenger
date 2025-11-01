@@ -1,68 +1,80 @@
 """
 shield_crypto.py
 ====================
-Implements Carbon Shield — a multi-layer, legally compliant encryption wrapper
-that protects message payloads beyond standard Fernet.
+Carbon Shield (reworked) — AES-GCM authenticated encryption layer with
+HKDF-derived keys so it can be used deterministically from a chat_key string.
 
-Each encryption pass adds a pseudo-“onion” layer using multiple hash+XOR transformations,
-making decryption without the correct key computationally infeasible.
-
-Part of: CarbonIt Secure Messenger
-Author: Edwin Sam K Reju
-License: MIT
+APIs:
+- derive_shield_key(chat_key: str) -> bytes        # 32-byte key
+- shield_encrypt(key: bytes, plaintext: str) -> str  # returns base64(nonce + ciphertext)
+- shield_decrypt(key: bytes, encoded: str) -> str    # returns plaintext or "" on error
 """
 
-import base64
-import hashlib
 import os
+import base64
+from typing import Optional
+
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+from cryptography.hazmat.primitives import hashes
+
+# Constants
+AESGCM_KEY_SIZE = 32          # 256-bit AES-GCM
+AESGCM_NONCE_SIZE = 12        # recommended nonce size for GCM
+HKDF_INFO = b"carbonit-shield-v1"  # context string for domain separation
 
 
-def _xor_bytes(a: bytes, b: bytes) -> bytes:
-    """XOR two byte strings (used for obfuscation layers)."""
-    return bytes(x ^ y for x, y in zip(a, b))
-
-
-def shield_encrypt(plaintext: str) -> str:
+def derive_shield_key(chat_key: str, salt: Optional[bytes] = None) -> bytes:
+    # TODO, Add salt (optional) to HKDF for session uniqueness
     """
-    Adds Carbon Shield layers before Fernet encryption.
+    Deterministically derive a 32-byte key suitable for AES-GCM from the
+    chat_key (string). Both sides must call this with the exact same chat_key
+    to derive the same shield key.
+
+    Optional salt may be provided; if you want cross-session uniqueness,
+    you can supply a persistent salt (but default None is fine).
     """
-    data = plaintext.encode()
-
-    # Layer 1: Salted hash transform
-    salt1 = os.urandom(8)
-    h1 = hashlib.sha256(salt1 + data).digest()
-    layer1 = _xor_bytes(data, h1[:len(data)])
-
-    # Layer 2: Secondary salt and mix
-    salt2 = os.urandom(8)
-    h2 = hashlib.sha512(salt2 + layer1).digest()
-    layer2 = _xor_bytes(layer1, h2[:len(layer1)])
-
-    # Layer 3: Combine salts and base64 encode
-    payload = salt1 + salt2 + layer2
-    encoded = base64.urlsafe_b64encode(payload).decode()
-    return encoded
+    ikm = chat_key.encode()  # input key material
+    hkdf = HKDF(
+        algorithm=hashes.SHA256(),
+        length=AESGCM_KEY_SIZE,
+        salt=salt,
+        info=HKDF_INFO,
+    )
+    return hkdf.derive(ikm)
 
 
-def shield_decrypt(encoded: str) -> str:
+def shield_encrypt(key: bytes, plaintext: str) -> str:
     """
-    Removes Carbon Shield layers after Fernet decryption.
+    Encrypts the plaintext using AES-GCM.
+    Returns a urlsafe-base64 string of (nonce || ciphertext_with_tag).
     """
     try:
-        data = base64.urlsafe_b64decode(encoded)
-        salt1 = data[:8]
-        salt2 = data[8:16]
-        layer2 = data[16:]
+        aesgcm = AESGCM(key)
+        nonce = os.urandom(AESGCM_NONCE_SIZE)
+        ciphertext = aesgcm.encrypt(nonce, plaintext.encode(), associated_data=None)
+        payload = nonce + ciphertext
+        return base64.urlsafe_b64encode(payload).decode()
+    except Exception as e:
+        # Keep error message concise so logs don't leak secrets
+        print(f"[SHIELD ENCRYPT ERROR] {e}")
+        return ""
 
-        # Reverse Layer 2
-        h2 = hashlib.sha512(salt2 + layer2).digest()
-        layer1 = _xor_bytes(layer2, h2[:len(layer2)])
 
-        # Reverse Layer 1
-        h1 = hashlib.sha256(salt1 + layer1).digest()
-        plaintext_bytes = _xor_bytes(layer1, h1[:len(layer1)])
-
-        return plaintext_bytes.decode()
+def shield_decrypt(key: bytes, encoded: str) -> str:
+    """
+    Decode the urlsafe-base64 payload (nonce || ciphertext) and decrypt.
+    Returns plaintext, type : str, or an empty string on failure.
+    """
+    try:
+        payload = base64.urlsafe_b64decode(encoded)
+        if len(payload) < AESGCM_NONCE_SIZE + 16:  # 16 is minimum tag size
+            raise ValueError("payload too short")
+        nonce = payload[:AESGCM_NONCE_SIZE]
+        ciphertext = payload[AESGCM_NONCE_SIZE:]
+        aesgcm = AESGCM(key)
+        plaintext = aesgcm.decrypt(nonce, ciphertext, associated_data=None)
+        return plaintext.decode()
     except Exception as e:
         print(f"[SHIELD DECRYPT ERROR] {e}")
         return ""
