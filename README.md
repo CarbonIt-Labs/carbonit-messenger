@@ -77,7 +77,9 @@ Developed by CarbonIt-Labs
 Core Contributors:
 
 Edwin Sam K Reju – CEO, Co-Founder & Developer
+
 Poojit Matukumalli - Co-Founder & Developer
+
 Dhruv - Co-Founder & Developer
 
 
