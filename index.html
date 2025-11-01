@@ -69,9 +69,9 @@
 
         /* Team Card Avatar Glow Effect */
         .team-card-hover:hover .avatar-placeholder {
-            border-color: #58a6ff; /* Brighter accent blue border color */
-            color: #58a6ff; /* Accent blue initial color */
-            box-shadow: 0 0 15px rgba(88, 166, 255, 0.8); /* Stronger blue glow */
+            border-color: #58a6ff;
+            color: #58a6ff;
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.8);
         }
         /* Custom button styling for the install button */
         .install-button {
@@ -98,16 +98,13 @@
                      alt="CarbonIt Messenger Logo" 
                      class="h-16 w-16 logo-hover rounded-full cursor-pointer">
             </div>
-            
-            <!-- Navigation Links - Reduced spacing with space-x-3 -->
+
             <div class="flex items-center space-x-3">
                 
-                <!-- 2. Features (Bordered, same size as GitHub) -->
                 <a href="#features" class="px-3 py-1 text-sm rounded-full border border-gray-700 hover:border-accent hover:bg-gray-800 transition duration-300 flex items-center whitespace-nowrap">
                     Features
                 </a>
-                
-                <!-- 3. Team Members (Text-only, slightly reduced padding) -->
+
                 <a href="#team" class="px-3 py-1 text-sm rounded-full border border-gray-700 hover:border-accent hover:bg-gray-800 transition duration-300 flex items-center whitespace-nowrap">
                     Team Members
                 </a>
@@ -125,7 +122,7 @@
                 CarbonIt Messenger is an experimental decentralized, end-to-end encrypted P2P chat system built in Python. It’s designed to demonstrate secure communication principles without relying on central servers.
             </p>
 
-            <!-- NEW: GitHub Redirect Link below the main text -->
+            <!-- GitHub Redirect Link below the main text -->
             <div class="flex justify-center pt-2">
                 <a href="https://github.com/CarbonIt-Labs/carbonit-messenger" target="_blank" 
                    class="inline-flex items-center space-x-2 text-base font-medium text-gray-400 hover:text-accent transition duration-300 group">
@@ -134,7 +131,7 @@
                     <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                 </a>
             </div>
-            <!-- END NEW GitHub Redirect Link -->
+            <!-- End GitHub Redirect Link -->
 
             <div class="pt-8">
                 <div class="inline-block px-6 py-3 bg-accent/20 border border-accent rounded-xl shadow-lg transition duration-300 hover:shadow-2xl">
@@ -307,49 +304,6 @@
             </div>
         </section>
         
-        <section class="space-y-10 pt-10">
-            <h2 class="text-4xl font-bold text-center text-white mb-10">Project Details</h2>
-
-            <div class="grid lg:grid-cols-2 gap-8">
-                <div class="bg-card p-6 rounded-xl shadow-xl border border-gray-700 transition duration-300 hover:border-accent">
-                    <h3 class="text-2xl font-semibold mb-4 text-accent">Project Architecture</h3>
-                    <pre class="bg-gray-900 p-4 rounded-lg overflow-x-auto text-sm text-gray-200">
-carbonIt/
-├── network/
-│   ├── carbonit_node.py         # main node logic (server + client)
-│   └── run_node.bat             # launcher script
-├── Keys/
-│   ├── public_key_private_key/  # RSA or ECC key generation
-│   ├── chat_key/
-│   │   ├── derive_chat_key.py
-│   │   └── rotate_chat_key.py
-│   └── __init__.py
-├── encryptdecrypt/
-│   ├── encrypt_message.py
-│   └── decrypt_message.py
-└── LICENSE</pre>
-                </div>
-
-                <div class="bg-card p-6 rounded-xl shadow-xl border border-gray-700 transition duration-300 hover:border-accent">
-                    <h3 class="text-2xl font-semibold mb-4 text-accent">⚙️ How to Run</h3>
-                    <p class="text-gray-400 mb-4">Follow these steps to clone the repository and run a node:</p>
-
-                    <h4 class="font-semibold text-white mb-2">1. Clone the Repository:</h4>
-                    <pre class="bg-gray-900 p-3 rounded-lg overflow-x-auto text-sm text-green-400">
-git clone https://github.com/CarbonIt-Labs/carbonit-messenger.git
-cd carbonit-messenger/network</pre>
-
-                    <h4 class="font-semibold text-white mt-4 mb-2">2. Run the Node:</h4>
-                    <p class="text-gray-400 mb-2">Use the batch file (Windows) or the Python script directly:</p>
-                    <pre class="bg-gray-900 p-3 rounded-lg overflow-x-auto text-sm text-yellow-400">
-python carbonit_node.py &lt;peer_public_id_or_None&gt; &lt;peer_ip&gt; &lt;peer_port&gt;</pre>
-                    <p class="text-gray-400 mt-2 text-sm italic">Example to connect to another node ('sam') at 127.0.0.1:5050:</p>
-                    <pre class="bg-gray-900 p-3 rounded-lg overflow-x-auto text-sm text-purple-400">
-python carbonit_node.py sam 127.0.0.1 5050</pre>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <footer class="bg-card p-6 mt-12 border-t border-gray-700">
@@ -370,7 +324,7 @@ python carbonit_node.py sam 127.0.0.1 5050</pre>
             </div>
         </div>
         <div class="text-center text-xs text-gray-600 mt-8 pt-4 border-t border-gray-800">
-            Edwin Sam K Reju &copy; 2025 CarbonIt Messenger.
+            CarbonIt-Labs &copy; 2025 CarbonIt Messenger.
         </div>
     </footer>
 
