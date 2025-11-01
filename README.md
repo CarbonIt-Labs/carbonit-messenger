@@ -80,7 +80,7 @@ Edwin Sam K Reju – CEO, Co-Founder & Developer
 
 Poojit Matukumalli - Co-Founder & Developer
 
-Dhruv - Co-Founder & Developer
+Dan (AKA: Dhruv) - Co-Founder & Developer
 
 
 ⚖️ License
