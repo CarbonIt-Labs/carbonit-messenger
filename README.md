@@ -76,7 +76,9 @@ Integrity	Each message includes SHA-256 ID, timestamp (stap), and delivery ackno
 Developed by CarbonIt-Labs
 Core Contributors:
 
-Edwin Sam K Reju – Founder & Lead Developer
+Edwin Sam K Reju – CEO, Co-Founder & Developer
+Poojit Matukumalli - Co-Founder & Developer
+Dhruv - Co-Founder & Developer
 
 
 ⚖️ License
