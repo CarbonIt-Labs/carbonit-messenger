@@ -1,11 +1,11 @@
 {
   "relays": [
     {
-      "id": "relay-01",
-      "name": "CarbonIt Relay Alpha",
-      "ip": "127.0.0.1",
-      "port": 6060,
-      "region": "local",
+      "id": "carbonit-relay-01",
+      "name": "CarbonIt Relay 1",
+      "ip": "192.158.1.50",
+      "port": 5050,
+      "region": "In",
       "status": "active",
       "pub_hash": "bdf67a892a17f4e5b9f271a53e72a1895e47e2d124debc7b84e9c7b94751a3c3"
     },
