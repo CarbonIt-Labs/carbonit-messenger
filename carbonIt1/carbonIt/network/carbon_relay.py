@@ -27,7 +27,7 @@ LOG_ENABLED = False
 LOG_PATH = "relay_log.txt"
 MAX_ROUTE_LEN = 8
 SAFE_MODE = True
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["*"]
 
 # --- helper functions ---
 def now_iso():
