@@ -9,7 +9,7 @@ Handles:
  - Automatic chat-key rotation every 10 minutes or 25 messages
  - Secure KEYUPDATE sync between peers
 
-Author: Edwin Sam K Reju
+Author: Edwin Sam K Reju, Poojit Matukumalli
 License: MIT
 """
 
