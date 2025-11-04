@@ -78,7 +78,7 @@ Core Contributors:
 
 Edwin Sam K Reju – CEO, Co-Founder & Developer
 
-Poojit Matukumalli - Co-Founder & Developer
+Poojit Matukumalli - Co-Founder & Lead Developer
 
 Dan (AKA: Dhruv) - Co-Founder & Developer
 
