@@ -26,7 +26,7 @@ LISTEN_PORT = 5050
 LOG_ENABLED = False
 LOG_PATH = "relay_log.txt"
 MAX_ROUTE_LEN = 8
-SAFE_MODE = True
+SAFE_MODE = False
 ALLOWED_HOSTS = ["*"]
 
 # --- helper functions ---
