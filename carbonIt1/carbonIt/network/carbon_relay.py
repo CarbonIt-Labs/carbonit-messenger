@@ -3,10 +3,11 @@ carbon_relay_async.py
 ----------------------
 Async version of Carbon Relay (multi-hop forwarder) for CarbonIt Secure Messenger.
 Handles connections using asyncio (no threads, no blocking).
+Uses Tor .onion routing.
 
 Envelope format (JSON):
 {
-  "route": ["ip:port", "ip:port", ...],
+  "route": [".onion:port", ".onion:port", ...],
   "payload": "<encrypted or base64 string>",
   "from": "<sender_pubid>",
   "to": "<dest_pubid>",
@@ -14,20 +15,20 @@ Envelope format (JSON):
   "meta": { ... }   # optional
 }
 """
-
+import aiohttp_socks as asocks
 import asyncio
 import json
 import time
 import argparse
 
 # --- configuration ---
-LISTEN_HOST = "0.0.0.0"
+LISTEN_HOST = "127.0.0.1"
 LISTEN_PORT = 5050
 LOG_ENABLED = False
 LOG_PATH = "relay_log.txt"
 MAX_ROUTE_LEN = 8
 SAFE_MODE = False
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".onion"]
 
 # --- helper functions ---
 def now_iso():
@@ -42,10 +43,11 @@ def log_event(line: str):
     except Exception:
         pass
 
+
 def parse_hostport(s: str):
     try:
-        ip, port = s.rsplit(":", 1)
-        return ip, int(port)
+        onion_route, port = s.rsplit(":", 1)
+        return onion_route, int(port)
     except Exception:
         return None, None
 
@@ -108,33 +110,37 @@ class CarbonRelayAsync:
             return
 
         next_hop = route.pop(0)
-        ip, port = parse_hostport(next_hop)
-        if ip is None or port is None:
+        onion_route, port = parse_hostport(next_hop)
+        if onion_route is None or port is None:
             log_event(f"INVALID_HOP {next_hop}")
             return
 
-        if self.safe_mode and ip not in ALLOWED_HOSTS:
-            log_event(f"REJECT_FORWARD to {ip}:{port} (not allowed in safe mode)")
+        if self.safe_mode and not onion_route.endswith(".onion"):
+            log_event(f"REJECT_FORWARD to {onion_route}:{port} (not .onion). (not allowed in safe mode)")
             return
 
         envelope["route"] = route
 
-        ok = await self._forward_to_next(ip, port, envelope, from_id, to_id)
+        ok = await self._forward_to_next(onion_route, port, envelope, from_id, to_id)
         if ok:
-            log_event(f"FORWARDED from={from_id} next={ip}:{port} remaining={len(route)}")
-        else:
-            log_event(f"FORWARD_FAILED from={from_id} next={ip}:{port}")
+            log_event(f"FORWARDED from={from_id} next={onion_route}:{port} remaining={len(route)}")
+        else: 
+            log_event(f"FORWARD_FAILED from={from_id} next={onion_route}:{port}")
 
-    async def _forward_to_next(self, ip, port, envelope, from_id, to_id):
+    async def _forward_to_next(self, onion_route, port, envelope, from_id, to_id):
         try:
-            reader, writer = await asyncio.open_connection(ip, port)
+            reader, writer = await asocks.open_connection(proxy_host="127.0.0.1",
+                proxy_port=9050,
+                host=onion_route,
+                port=port
+                )  # asocks is the name of aiohttp-socks          
             writer.write(json.dumps(envelope).encode())
             await writer.drain()
             writer.close()
             await writer.wait_closed()
             return True
         except Exception as e:
-            log_event(f"CONNECT_FAIL next={ip}:{port} err={e}")
+            log_event(f"CONNECT_FAIL, next={onion_route}:{port } err={e}")
             return False
 
 
