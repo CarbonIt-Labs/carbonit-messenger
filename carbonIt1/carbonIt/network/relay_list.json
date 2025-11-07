@@ -3,7 +3,7 @@
     {
       "id": "carbonit-relay-01",
       "name": "CarbonIt Relay 1",
-      "ip": "192.158.1.50",
+      "onion": "4q2ntnuaa33icqi6k7inxwg3jqyphkv75btagbclose6qka5xav5hcid.onion",
       "port": 5050,
       "region": "In",
       "status": "active",
@@ -15,7 +15,7 @@
       "ip": "127.0.0.1",
       "port": 6061,
       "region": "local",
-      "status": "active",
+      "status": "offline",
       "pub_hash": "f5c17e0e32f3a8a56b96e5ed12481f10dfdf8c87e24c7a8b07e8dc6a40a9badd"
     },
     {
@@ -24,7 +24,7 @@
       "ip": "127.0.0.1",
       "port": 6062,
       "region": "local",
-      "status": "active",
+      "status": "offline",
       "pub_hash": "e172c61c8f4d35c41c3a39d5e3c5d8d8a10ff9e985f3b96a4ec2f1e2c72a1cb3"
     }
   ],
@@ -32,6 +32,7 @@
     "version": "1.0",
     "description": "List of available Carbon Shield relays for CarbonIt Secure Messenger",
     "last_updated": "2025-10-31T00:00:00Z",
-    "maintainer": "CarbonIt Labs Network (Open Relay Program)"
+    "maintainer": "CarbonIt Labs Network (Open Relay Program).", 
+    "Devs involved" : "Poojit Matukumalli (GitHub- Poojit-Matukumalli) & Edwin Sam K Reju"
   }
 }
