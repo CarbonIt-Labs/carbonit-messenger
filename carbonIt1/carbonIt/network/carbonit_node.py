@@ -13,8 +13,8 @@ Author: Edwin Sam K Reju, Poojit Matukumalli
 License: MIT
 """
 
-import socket
-import threading
+import aiohttp_socks
+import asyncio
 import time
 import json
 import hashlib
@@ -44,15 +44,15 @@ USERNAME = None
 
 
 # === NETWORK SETUP ===
-def handle_incoming(conn, addr, priv_key):
+async def handle_conn(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
     global CARBONIT_CHAT_KEY
-
+    addr = writer.get_extra_info("peername")
     print(f"[INCOMING CONNECT] {addr}")
     while True:
         try:
-            data = conn.recv(BUFFER_SIZE)
+            data = await reader.read(BUFFER_SIZE)
             if not data:
-                break
+                return
 
             msg = data.decode()
 
@@ -77,34 +77,33 @@ def handle_incoming(conn, addr, priv_key):
 
         except Exception as e:
             print(f"[CONNECTION ERROR] {e}")
-            break
+        finally:
+            writer.close()
+            await writer.wait_closed()
 
-    conn.close()
-    print(f"[DISCONNECTED] {addr}")
 
-
-def start_listener(priv_key):
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((HOST, PORT))
-    server.listen(1)
+async def start_listener(host = "0.0.0.0", port=5050):
+    server = await asyncio.start_server(handle_conn, "127.0.0.1", port)
+    async with server:
+        await server.serve_forever()
 
     print("------------------------------------------")
     print(f"[LISTENING] on {HOST}:{PORT} ...")
     print("------------------------------------------")
 
-    while True:
-        conn, addr = server.accept()
-        threading.Thread(target=handle_incoming, args=(conn, addr, priv_key), daemon=True).start()
 
-
-def start_client(peer_ip, peer_port, priv_key, peer_pub_key):
+async def start_client(peer_onion, peer_port, priv_key, peer_pub_key):
     global CARBONIT_CHAT_KEY
-    client = None
+    reader = None ; writer = None
     try:
-        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client.connect((peer_ip, int(peer_port)))
+        reader, writer = await aiohttp_socks.open_connection(
+            proxy_host="127.0.0.1",
+            proxy_port=9050,
+            host=peer_onion,
+            port = int(peer_port)
+        )
 
-        print(f"You: [CONNECTED TO PEER] {peer_ip}:{peer_port}")
+        print(f"You: [CONNECTED TO PEER] {peer_onion}:{peer_port}")
 
         while True:
             msg = input("You: ")
@@ -113,7 +112,7 @@ def start_client(peer_ip, peer_port, priv_key, peer_pub_key):
 
             check_rotation(priv_key, peer_pub_key)
 
-            # Ensure chat key is available and valid before encrypting
+            # make sure the chat key is available and valid before encrypting
             if CARBONIT_CHAT_KEY is None:
                 # If chat key is missing, create it again
                 CARBONIT_CHAT_KEY = derive_chat_key(priv_key, peer_pub_key)
@@ -124,23 +123,25 @@ def start_client(peer_ip, peer_port, priv_key, peer_pub_key):
                     print("[KEY INFO] Chat key derived for encryption.")
 
             encrypted = encrypt_message(CARBONIT_CHAT_KEY, msg)
-            client.send(encrypted.encode())
+            writer.write(encrypted.encode())
+            await writer.drain()
 
     except Exception as e:
         print(f"[SEND ERROR] {e}")
     finally:
-        if client:
+        if writer is not None and hasattr(writer, "close"):
             try:
-                client.close()
+                writer.close()
+                await writer.wait_closed()
             except Exception:
                 pass
 
 
 # === MAIN ===
-def main():
+async def main():
     global USERNAME, CARBONIT_CHAT_KEY, PEER_PUB_KEY
 
-    print("      ≡ƒºá CarbonIt Secure Messenger")
+    print("       CarbonIt Secure Messenger")
     print("==========================================\n")
 
     USERNAME = input("Enter your username: ").strip()
@@ -156,7 +157,7 @@ def main():
     print("------------------------------------------\n")
 
     PEER_PUB_KEY = input("Enter peer's public key (hashed username): ").strip()
-    peer_ip = input("Enter peer's IP address: ").strip()
+    peer_onion = input("Enter peer's Onion address: ").strip()
     peer_port = input("Enter peer's port (default 5050): ").strip() or "5050"
 
     print("\nStarting CarbonIt node...")
@@ -171,12 +172,12 @@ def main():
     print("------------------------------------------")
 
     # Start background listener and auto key rotation monitor
-    threading.Thread(target=start_listener, args=(priv_key,), daemon=True).start()
+    asyncio.create_task(start_listener())
     auto_rotation_monitor(priv_key, PEER_PUB_KEY)
 
     # Start client (send messages)
-    start_client(peer_ip, peer_port, priv_key, PEER_PUB_KEY)
+    await start_client(peer_onion, peer_port, priv_key, PEER_PUB_KEY)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

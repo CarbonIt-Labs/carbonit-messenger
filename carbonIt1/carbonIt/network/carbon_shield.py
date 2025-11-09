@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 carbon_shield.py
 ----------------
@@ -163,7 +162,7 @@ def main():
     args = p.parse_args()
 
     cli_send(args)
-
+    print("accessed carbon shield")
 
 if __name__ == "__main__":
     main()

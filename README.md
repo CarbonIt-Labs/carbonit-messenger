@@ -3,6 +3,8 @@
 CarbonIt Messenger is an experimental decentralized, end-to-end encrypted P2P chat system built in Python.
 It’s designed to demonstrate secure communication principles — including key rotation, message acknowledgment, offline queueing, and peer-to-peer transport — without relying on central servers.
 
+Credits at CREDITS.md.
+
 # - Vision
 
 “Privacy should not be a privilege — it should be the foundation.”
